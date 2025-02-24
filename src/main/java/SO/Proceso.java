@@ -37,10 +37,11 @@ public class Proceso {
         this.estado = estado;
     }
     
-    public void crearHilo(String nombreHilo){ 
-        Hilo hilo = new Hilo(nombreHilo);
-        hilos.add(hilo);
-        hilo.start();
+    public void crearHilo(String nombreHilo, SistemaOperativo sistema, String nombreArchivo) {
+        Hilo nuevoHilo = new Hilo(nombreHilo, sistema, nombreArchivo);
+        hilos.add(nuevoHilo);
+        nuevoHilo.start(); // Iniciar el hilo automáticamente
+        System.out.println("Hilo '" + nombreHilo + "' creado y en ejecución en el proceso '" + nombreProceso + "'.");
     }
     
     public ArrayList<String> listarHilos(){

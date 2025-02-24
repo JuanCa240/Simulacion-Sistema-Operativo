@@ -70,26 +70,20 @@ public class Menu {
     }
     
     public void crearArchivoTXT(){
-        //Crear Proceso
-        crearProceso();
+        System.out.print("\nIngrese el nombre del archivo asociada al proceso: ");
+        String nombreArchivo = teclado.nextLine() + ".txt";
         
-        System.out.print("\nIngrese el nombre del archivo: ");
-        String nombreArchivo = teclado.nextLine();
+        archivo = new Archivo(nombreArchivo);
         
-        archivo = new Archivo(nombreArchivo +".txt");
-        
-        SO.CrearArchivo(nombreArchivo + ".txt");
-        
-    }
-   
-    public void crearProceso(){
         System.out.print("Ingrese el nombre al proceso: ");
         String nombreProceso = teclado.nextLine();
        
         String id = generarNumerosAleatorios();
        
         SO.crearProceso(id, nombreProceso);
+        SO.CrearArchivo(nombreArchivo);
         
+        SO.ejecutarProceso(nombreProceso);
        
         System.out.println("¿Desea crear hilos? ");
         System.out.println("1.) Si");
@@ -98,7 +92,11 @@ public class Menu {
         String opcion = teclado.nextLine();
         switch(opcion){
             case "1":
-                crearHilo();
+                 for (int i = 0; i < 2; i++) { 
+                    String nombreHilo = "Editor" + (i + 1);
+                    SO.crearHiloEnProceso(nombreProceso, nombreHilo, nombreArchivo); 
+                }
+                    System.out.println("Se han creado dos hilos editores para el proceso '" + nombreProceso + "'.\n");
             break;
                 
             case "2":
@@ -116,7 +114,7 @@ public class Menu {
             if (p.getNombreProceso().equals(nombreProceso)) {
                 System.out.print("Ingrese el nombre del hilo: ");
                 String nombreHilo = teclado.nextLine();
-                p.crearHilo(nombreHilo);
+                //proceso.crearHilo(nombreHilo);
                 return;
             }
         }

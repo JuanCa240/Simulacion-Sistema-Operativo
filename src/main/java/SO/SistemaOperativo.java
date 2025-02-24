@@ -61,7 +61,8 @@ public class SistemaOperativo {
              System.out.println("No se encontró el proceso '" + nombre + "'.");
           
        }
-   }
+    }
+   
    
     public void terminarProceso(String nombre) {
         boolean encontrado = false;
@@ -86,6 +87,18 @@ public class SistemaOperativo {
         System.out.println("No se encontró el proceso.");
     }
     
+    public void crearHiloEnProceso(String nombreProceso, String nombreHilo, String nombreArchivo) {
+        for (int i = 0; i < procesos.size(); i++) { // Buscar el proceso
+            Proceso proceso = procesos.get(i);
+            if (proceso.getNombreProceso().equals(nombreProceso)) {
+                proceso.crearHilo(nombreHilo, this, nombreArchivo); // Crear y ejecutar hilo
+                return;
+            }
+        }
+        System.out.println("No se encontró el proceso '" + nombreProceso + "'.");
+    }
+
+    
     public void CrearArchivo(String nombreArchivo){
         try {
             File archivo = new File(nombreArchivo);
@@ -107,24 +120,7 @@ public class SistemaOperativo {
             System.out.println("Error al escribir en el archivo: " + e.getMessage());
         }
     }
-   
-    public void leerArchivo(String nombreArchivo){
-        try {
-            FileReader lector = new FileReader(nombreArchivo);
-            BufferedReader bufferedReader = new BufferedReader(lector);
-            String linea;
-            
-            System.out.println("Contenido del archivo: ");
-            while ((linea = bufferedReader.readLine()) != null) {
-                System.out.println(linea);
-            }
-            bufferedReader.close();
-        } catch (IOException e) {
-            System.out.println("Error al leer el archivo");
-            e.printStackTrace();
-        }
-    }
-   
+    
     public void enviarImpresion(Dispositivo dispositivo, String texto, String nombreProceso) {
         boolean encontrado = false;
         

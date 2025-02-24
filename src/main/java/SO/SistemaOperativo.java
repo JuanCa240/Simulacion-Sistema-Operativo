@@ -13,8 +13,9 @@ import java.util.ArrayList;
 
 public class SistemaOperativo {
     private ArrayList<Proceso> procesos;
+    private String nombreArchivo;
 
-    public SistemaOperativo() {
+    public SistemaOperativo(String nombreArchivo) {
         procesos = new ArrayList<>();
     }
     
@@ -53,7 +54,7 @@ public class SistemaOperativo {
                    System.out.println("Ejecutando proceso... " + nombre + "\n");
                 }
                  encontrado = true;
-                 break; // aqui se encontró el proceso y no necesitamos buscarlo
+                 break; // aqui para el bucle
             }
         }
         if (!encontrado)
@@ -89,7 +90,7 @@ public class SistemaOperativo {
         try {
             File archivo = new File(nombreArchivo);
             if (archivo.createNewFile()) 
-                System.out.println("Archivo creado: " + archivo.getName());
+                System.out.println("Archivo creado correctamente !: '" + archivo.getName() + "' \n");
             else 
                 System.out.println("El archivo ya fue creado");
             
@@ -98,8 +99,8 @@ public class SistemaOperativo {
             e.printStackTrace();
         }
     }
-    public synchronized void escribirArchivo(String contenido, File nombreArchivo){
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(nombreArchivo))) {
+    public synchronized void escribirArchivo(String contenido, String nombreArchivo){
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(nombreArchivo,true))) {
             bw.write(contenido);
             bw.newLine();
         } catch (IOException e) {

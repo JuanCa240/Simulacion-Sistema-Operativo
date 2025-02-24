@@ -12,18 +12,19 @@ public class Menu {
     private Scanner teclado;
     private ArrayList<Proceso> procesos;
     private Proceso proceso;
+    private Archivo archivo;
    
     public Menu(){
         teclado = new Scanner(System.in);
         procesos = new ArrayList<>();
-        SO = new SistemaOperativo();
+        SO = new SistemaOperativo("");
     }
    
     public void correrSimulacion(){
        
         while(true){
             System.out.println("Simulacion SO");
-            System.out.println("1.) Crear Proceso:");
+            System.out.println("1.) Crear un archivoTXT");
             System.out.println("2.) Ejecutar Proceso:");
             System.out.println("3.) Kill:");
             System.out.println("4.) Listar Procesos:");
@@ -36,7 +37,7 @@ public class Menu {
 
             switch(opcion){
                 case "1":
-                    crearProceso();
+                    crearArchivoTXT();
                     break;
                
                 case "2":
@@ -53,11 +54,12 @@ public class Menu {
                 
                 case "5":
                     listarHilos();
-                    
                     break;
+                    
                 case "6":
                     enviarTextoADispositivo();
                     break;
+                    
                 case "7":
                     System.out.println("Saliendo...");
                 return;
@@ -65,6 +67,19 @@ public class Menu {
        
         }
 
+    }
+    
+    public void crearArchivoTXT(){
+        //Crear Proceso
+        crearProceso();
+        
+        System.out.print("\nIngrese el nombre del archivo: ");
+        String nombreArchivo = teclado.nextLine();
+        
+        archivo = new Archivo(nombreArchivo +".txt");
+        
+        SO.CrearArchivo(nombreArchivo + ".txt");
+        
     }
    
     public void crearProceso(){
@@ -75,21 +90,21 @@ public class Menu {
        
         SO.crearProceso(id, nombreProceso);
         
-        while(true){
-            System.out.println("¿Desea crear hilos? ");
-            System.out.println("1.) Si");
-            System.out.println("2.) No\n");
+       
+        System.out.println("¿Desea crear hilos? ");
+        System.out.println("1.) Si");
+        System.out.println("2.) No\n");
 
-            String opcion = teclado.nextLine();
-            switch(opcion){
-                case "1":
-                    crearHilo();
-                break;
+        String opcion = teclado.nextLine();
+        switch(opcion){
+            case "1":
+                crearHilo();
+            break;
                 
-                case "2":
-                  return;
-            }
-        } 
+            case "2":
+                //Salir
+              return;
+        }
     }
     
     public void crearHilo() {
@@ -105,7 +120,6 @@ public class Menu {
                 return;
             }
         }
-
         System.out.println("No está en ejecución el proceso'" + nombreProceso + "'.");
     }
     
@@ -129,7 +143,6 @@ public class Menu {
                 return;
             }
         }
-
         System.out.println("No se encontró el proceso '" + nombreProceso + "'.");
     }
 
@@ -188,10 +201,8 @@ public class Menu {
 
         Dispositivo dispositivo = (opcion.equals("1")) ? new Monitor() : new Impresora();
         SO.enviarImpresion(dispositivo, texto, nombreProceso);
-}
-   
-   
-   
+    }
+
     public static void main(String[] args) {
         Menu m = new Menu();
         m.correrSimulacion();  

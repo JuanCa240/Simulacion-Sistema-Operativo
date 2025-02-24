@@ -19,8 +19,16 @@ public class SistemaOperativo {
     }
     
     public void crearProceso(String id, String nombreProceso){
+        for (int i = 0; i < procesos.size(); i++) {
+            if (procesos.get(i).getNombreProceso().equals(nombreProceso)) {
+                System.out.println("Error: Ya existe un proceso con el nombre '" + nombreProceso + "'.");
+                return;
+            }
+        }
+        
         Proceso nuevoProceso = new Proceso(id,nombreProceso);
         procesos.add(nuevoProceso);
+        System.out.println("Se ha creado el '" + nombreProceso + "'\n");
     }
     
     public ArrayList<Proceso> listarProceso(){

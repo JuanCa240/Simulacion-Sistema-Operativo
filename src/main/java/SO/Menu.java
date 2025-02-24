@@ -11,6 +11,7 @@ public class Menu {
     private SistemaOperativo SO;
     private Scanner teclado;
     private ArrayList<Proceso> procesos;
+    private Proceso proceso;
    
     public Menu(){
         teclado = new Scanner(System.in);
@@ -26,8 +27,9 @@ public class Menu {
             System.out.println("2.) Ejecutar Proceso:");
             System.out.println("3.) Kill:");
             System.out.println("4.) Listar Procesos:");
-            System.out.println("5.) Enviar texto a dispositivo:");
-            System.out.println("6.) Salir:");
+            System.out.println("5.) Listar Hilos de un Proceso");
+            System.out.println("6.) Enviar texto a dispositivo:");
+            System.out.println("7.) Salir:");
            
             System.out.print("\nIngrese una opcion: ");
             String opcion = teclado.nextLine();
@@ -35,24 +37,28 @@ public class Menu {
             switch(opcion){
                 case "1":
                     crearProceso();
-                break;
+                    break;
                
                 case "2":
                     ejecutarProceso();
-                break;
+                    break;
                
                 case "3":
                     kill();
-                break;
+                    break;
                
                 case "4":
                     listarProcesos();
-                break;
-               
+                    break;
+                
                 case "5":
-                    enviarTextoADispositivo();
+                    listarHilos();
+                    
                     break;
                 case "6":
+                    enviarTextoADispositivo();
+                    break;
+                case "7":
                     System.out.println("Saliendo...");
                 return;
             }
@@ -68,8 +74,65 @@ public class Menu {
         String id = generarNumerosAleatorios();
        
         SO.crearProceso(id, nombreProceso);
-        System.out.println("Se ha creado el '" + nombreProceso + "'\n");
+        
+        while(true){
+            System.out.println("¿Desea crear hilos? ");
+            System.out.println("1.) Si");
+            System.out.println("2.) No\n");
+
+            String opcion = teclado.nextLine();
+            switch(opcion){
+                case "1":
+                    crearHilo();
+                break;
+                
+                case "2":
+                  return;
+            }
+        } 
     }
+    
+    public void crearHilo() {
+        System.out.print("Ingrese el nombre del proceso donde se creará el hilo: ");
+        String nombreProceso = teclado.nextLine();
+
+        for (int i = 0; i < procesos.size(); i++) {
+            Proceso p = procesos.get(i);
+            if (p.getNombreProceso().equals(nombreProceso)) {
+                System.out.print("Ingrese el nombre del hilo: ");
+                String nombreHilo = teclado.nextLine();
+                p.crearHilo(nombreHilo);
+                return;
+            }
+        }
+
+        System.out.println("No está en ejecución el proceso'" + nombreProceso + "'.");
+    }
+    
+    public void listarHilos() {
+        System.out.print("Ingrese el nombre del proceso para listar sus hilos: ");
+        String nombreProceso = teclado.nextLine();
+
+        for (int i = 0; i < procesos.size(); i++) {
+            Proceso p = procesos.get(i);
+            if (p.getNombreProceso().equals(nombreProceso)) {
+                ArrayList<String> hilos = p.listarHilos();
+                if (hilos.isEmpty()) {
+                    System.out.println("El proceso '" + nombreProceso + "' no tiene hilos.");
+                } else {
+                    System.out.println("Hilos del proceso '" + nombreProceso + "':");
+                    System.out.println("\n");
+                    for (int j = 0; j < hilos.size(); j++) {
+                        System.out.println("- " + hilos.get(j));
+                    }
+                }
+                return;
+            }
+        }
+
+        System.out.println("No se encontró el proceso '" + nombreProceso + "'.");
+    }
+
    
     public void ejecutarProceso(){
         System.out.print("Ingrese el nombre del proceso que desea buscar: ");

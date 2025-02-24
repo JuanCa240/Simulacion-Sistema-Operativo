@@ -13,13 +13,14 @@ public class Hilo extends Thread{
    
     @Override
     public void run() {
-        System.out.println("el Hilo 1 " + nombre + " esta en ejecucion...");
         try {
-            Thread.sleep(2000);
+            for (int i = 0; i < 3; i++) {
+                System.out.println(nombre + " ejecutando...");
+                Thread.sleep(1000);
+            }
         } catch (InterruptedException e) {
-            System.out.println("el Hilo 2 " + nombre + " ha sido interrumpido");
+            System.out.println(nombre + " interrumpido.");
         }
-        System.out.println(" el Hilo " + nombre + " ha terminado");
     }
 
     public void crearHilo() {

@@ -15,6 +15,7 @@ public class Proceso {
         this.estado = "Esperando"; //Estado inicial
         this.hilos = new ArrayList<>();
     }
+    
 
     public int getContadorProceso() {
         return contadorProceso;
@@ -36,6 +37,12 @@ public class Proceso {
         this.estado = estado;
     }
     
+    public void crearHilo(String nombreHilo){ 
+        Hilo hilo = new Hilo(nombreHilo);
+        hilos.add(hilo);
+        hilo.start();
+    }
+    
     public ArrayList<String> listarHilos(){
         ArrayList<String> nombresHilos = new ArrayList<>();
         for (int i = 0; i < hilos.size(); i++) {
@@ -43,8 +50,4 @@ public class Proceso {
         }
         return nombresHilos;
     }
-   
-    public boolean agregarHilo(){
-        return true;
-    } 
 }

@@ -1,48 +1,40 @@
 package SO;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 
 public class MainPRUEBA {
       private Scanner teclado;
+      private SistemaOperativo SO;
+      private Archivo archivo;
+      private Hilo hilo;
 
     public MainPRUEBA() {
-        this.teclado = teclado;
+        teclado = new Scanner(System.in);
     }
     
     public void correrSO(){
-        boolean iniciar = true;
-        while(iniciar){
+        while(true){
             System.out.println("Simulacion SO");
             System.out.println("1.) Crear Archivo TXT:");
-            System.out.println("2.) Escribir en el archivo");
-            System.out.println("3.) Kill:");
-            System.out.println("4.) Listar Procesos:");
-            System.out.println("5.) Salir:");
+            System.out.println("2.) Escribir hilos en el archivo");
             
             System.out.print("\nIngrese una opcion: ");
             String opcion = teclado.nextLine();
 
             switch(opcion){
                 case "1":
-                
+                        
                     break;
                 
                 case "2":
-                   
+                        
                     break;
-                
+                    
                 case "3":
-                   
-                    break;
-                
-                case "4":
-                   
-                    break;
-                
-                case "5":
                     System.out.println("Saliendo del Sistema Operativo....");
-                    iniciar = false;
+                    
                     
                 default:
                     System.out.println("ERROR, Ingrese una opcion válida");
@@ -50,11 +42,13 @@ public class MainPRUEBA {
             }
         }
     }
+    
+
+    
+ 
 
     public static void main(String[] args) {
         MainPRUEBA m = new MainPRUEBA();
         m.correrSO();
-    }
-      
-      
+    }   
 }

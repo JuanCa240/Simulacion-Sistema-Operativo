@@ -1,6 +1,8 @@
 package SO;
 
 import AparatosElectronicos.Dispositivo;
+import AparatosElectronicos.Impresora;
+import AparatosElectronicos.Monitor;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -114,7 +116,23 @@ public class SistemaOperativo {
         }
     }
    
-    public void enviarImpresion(Dispositivo dispositivo, String texto, Proceso proceso){
-       
+    public void enviarImpresion(Dispositivo dispositivo, String texto, String nombreProceso) {
+        boolean encontrado = false;
+        
+         if (!encontrado) 
+            System.out.println("No se encontro el proceso '" + nombreProceso + "'.");
+
+        for (int i = 0; i < procesos.size(); i++) {
+            Proceso proceso = procesos.get(i);
+            if (proceso.getNombreProceso().equals(nombreProceso)) {
+                encontrado = true;
+                if (dispositivo.getClass() == Impresora.class) {
+                    ((Impresora) dispositivo).imprimirTexto(texto, proceso);
+                } else if (dispositivo.getClass() == Monitor.class) {
+                    ((Monitor) dispositivo).mostrarTexto(texto, proceso);
+                }
+                break;
+            }
+        }
     }
 }

@@ -1,9 +1,11 @@
 package AparatosElectronicos;
 
+import SO.Proceso;
+
 
 public class Dispositivo {
+    private Proceso proceso;
     protected String tipoDispositivo;
-    protected String mensaje;
 
     public Dispositivo(String tipoDispositivo) {
         this.tipoDispositivo = tipoDispositivo;
@@ -12,11 +14,8 @@ public class Dispositivo {
     public String getTipoDispositivo() {
         return tipoDispositivo;
     }
-
-    public String getMensaje() {
-        return mensaje;
+    
+    public void procesarTexto(String texto, Proceso proceso) {
+        System.out.println("Proceso '" + proceso.getNombreProceso() + "' envio texto a " + tipoDispositivo + ": " + texto);
     }
-    
-    
-    
 }
